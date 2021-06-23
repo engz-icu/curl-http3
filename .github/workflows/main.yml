@@ -28,6 +28,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: quiche
         run: |
+         sudo apt update -y
+         sudo apt upgrade -y
          git clone --recursive https://github.com/cloudflare/quiche
          cd quiche
          ls
