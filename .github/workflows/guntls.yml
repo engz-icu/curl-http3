@@ -1,0 +1,70 @@
+# This is a basic workflow to help you get started with Actions
+
+name: gnutls
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: |
+         sudo apt update -y
+         sudo apt upgrade -y
+         git clone --depth 1 https://gitlab.com/gnutls/gnutls.git
+         cd gnutls
+         ./bootstrap
+         ./configure --disable-doc --prefix=<somewhere1>
+         make
+         make install
+
+      # Runs a set of commands using the runners shell
+      - name: nghttp3 tcp2
+        run: |
+          cd ..
+          git clone https://github.com/ngtcp2/nghttp3
+          cd nghttp3
+          autoreconf -i
+          ./configure --prefix=<somewhere2> --enable-lib-only
+          make
+          make install
+          cd ..
+          git clone https://github.com/ngtcp2/ngtcp2
+          cd ngtcp2
+          autoreconf -i
+          ./configure PKG_CONFIG_PATH=<somewhere1>/lib/pkgconfig:<somewhere2>/lib/pkgconfig LDFLAGS="-Wl,-rpath,<somewhere1>/lib" --prefix=<somewhere3> --enable-lib-only --with-gnutls
+          make
+          make install
+          
+      - name: curl
+        run: |
+          cd ..
+          git clone https://github.com/curl/curl
+          cd curl
+          ./buildconf
+          ./configure --without-openssl --with-gnutls=<somewhere1> --with-nghttp3=<somewhere2> --with-ngtcp2=<somewhere3>
+          make
+          
+      - name: test
+        run: |
+          curl --http3 https://cloudflare.com
+          curl --alt-svc altsvc.cache https://quic.aiortc.org/
