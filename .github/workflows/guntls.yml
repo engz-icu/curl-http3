@@ -26,10 +26,25 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
+      - name: dep
         run: |
          sudo apt update -y
          sudo apt upgrade -y
+         wget https://ftp.gnu.org/gnu/nettle/nettle-3.7.3.tar.gz
+         tar zxvf nettle-3.7.3.tar.gz
+         cd nettle-3.7.3
+         ./configure
+         make
+         make install
+         cd
+         wget https://ftp.gnu.org/gnu/gmp/gmp-6.2.1.tar.lz
+         lzip -d gmp-6.2.1.tar.lz
+         tar xvf gmp-6.2.1.tar
+         cd gmp-6.2.1
+         ./configure
+         make
+         make install
+         cd
          git clone --depth 1 https://gitlab.com/gnutls/gnutls.git
          cd gnutls
          ./bootstrap
