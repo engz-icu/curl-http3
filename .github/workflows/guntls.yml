@@ -34,23 +34,23 @@ jobs:
          tar zxvf nettle-3.7.3.tar.gz
          cd nettle-3.7.3
          ./configure
-         make
-         make install
+         sudo make
+         sudo make install
          cd
          wget https://ftp.gnu.org/gnu/gmp/gmp-6.2.1.tar.lz
          lzip -d gmp-6.2.1.tar.lz
          tar xvf gmp-6.2.1.tar
          cd gmp-6.2.1
          ./configure
-         make
-         make install
+         sudo make
+         sudo make install
          cd
          git clone --depth 1 https://gitlab.com/gnutls/gnutls.git
          cd gnutls
          ./bootstrap
          ./configure --disable-doc --prefix=<somewhere1>
-         make
-         make install
+         sudo make
+         sudo make install
 
       # Runs a set of commands using the runners shell
       - name: nghttp3 tcp2
