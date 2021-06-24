@@ -30,6 +30,7 @@ jobs:
         run: |
          sudo apt update -y
          sudo apt upgrade -y
+         sudo apt install lzip
          wget https://ftp.gnu.org/gnu/nettle/nettle-3.7.3.tar.gz
          tar zxvf nettle-3.7.3.tar.gz
          cd nettle-3.7.3
