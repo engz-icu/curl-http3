@@ -1,0 +1,75 @@
+# This is a basic workflow to help you get started with Actions
+
+name: OpenSSL
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Build (patched) OpenSSL
+        run: |
+          sudo apt update
+          sudo apt upgrade
+          git clone --depth 1 -b OpenSSL_1_1_1k+quic https://github.com/quictls/openssl
+          cd openssl
+          ./config enable-tls1_3 --prefix=<somewhere1>
+          make
+          make install_sw
+
+      # Runs a set of commands using the runners shell
+      - name: Build nghttp3
+        run: |
+          cd ..
+          git clone https://github.com/ngtcp2/nghttp3
+          cd nghttp3
+          autoreconf -i
+          ./configure --prefix=<somewhere2> --enable-lib-only
+          make
+          make install
+
+      - name: Build ngtcp2
+        run: |
+          cd .. 
+          git clone https://github.com/ngtcp2/ngtcp2
+          cd ngtcp2
+          autoreconf -i
+          ./configure PKG_CONFIG_PATH=<somewhere1>/lib/pkgconfig:<somewhere2>/lib/pkgconfig LDFLAGS="-Wl,-rpath,<somewhere1>/lib" --prefix=<somewhere3> --enable-lib-only
+          make
+          make install
+
+      - name: Build curl
+        run: |
+          cd ..
+          git clone https://github.com/curl/curl
+          cd curl
+          ./buildconf
+          LDFLAGS="-Wl,-rpath,<somewhere1>/lib" ./configure --with-openssl=<somewhere1> --with-nghttp3=<somewhere2> --with-ngtcp2=<somewhere3>
+          make
+
+       - name: test
+         run: |
+           curl --http3 https://cloudflare.com
+           curl --alt-svc altsvc.cache https://quic.aiortc.org/
+          
+       
+
