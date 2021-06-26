@@ -65,9 +65,8 @@ jobs:
           ./buildconf
           LDFLAGS="-Wl,-rpath,<somewhere1>/lib" ./configure --with-openssl=<somewhere1> --with-nghttp3=<somewhere2> --with-ngtcp2=<somewhere3>
           make
-
-       - name: test
-         run: |
+      - name: test
+        run: |
            curl --http3 https://cloudflare.com
            curl --alt-svc altsvc.cache https://quic.aiortc.org/
           
