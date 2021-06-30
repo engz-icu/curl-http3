@@ -35,8 +35,8 @@ jobs:
          sudo apt-get install -y autogen
          git clone --depth 1 https://gitlab.com/gnutls/gnutls.git
          wget https://ftp.gnu.org/gnu/nettle/nettle-3.7.3.tar.gz
-         tar zxvf nettle-3.6.0.tar.gz
-         cd nettle-3.6.0
+         tar zxvf nettle-3.7.3.tar.gz
+         cd nettle-3.7.3
          ./configure
          sudo make
          sudo make install
