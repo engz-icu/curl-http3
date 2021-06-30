@@ -6,7 +6,7 @@ name: gnutls
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ test ]
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -51,7 +51,7 @@ jobs:
          git clone --depth 1 https://gitlab.com/gnutls/gnutls.git
          cd gnutls
          ./bootstrap
-         ./configure --disable-doc --prefix=<somewhere1>
+         ./configure --prefix=/home/gnutls
          sudo make
          sudo make install
 
@@ -62,14 +62,14 @@ jobs:
           git clone https://github.com/ngtcp2/nghttp3
           cd nghttp3
           autoreconf -i
-          ./configure --prefix=<somewhere2> --enable-lib-only
+          ./configure --prefix=/home/nghttp3 --enable-lib-only
           make
           make install
           cd ..
           git clone https://github.com/ngtcp2/ngtcp2
           cd ngtcp2
           autoreconf -i
-          ./configure PKG_CONFIG_PATH=<somewhere1>/lib/pkgconfig:<somewhere2>/lib/pkgconfig LDFLAGS="-Wl,-rpath,<somewhere1>/lib" --prefix=<somewhere3> --enable-lib-only --with-gnutls
+          ./configure PKG_CONFIG_PATH=/home/ngtcp2/lib/pkgconfig:<somewhere2>/lib/pkgconfig LDFLAGS="-Wl,-rpath,<somewhere1>/lib" --prefix=<somewhere3> --enable-lib-only --with-gnutls
           make
           make install
           
@@ -79,7 +79,7 @@ jobs:
           git clone https://github.com/curl/curl
           cd curl
           ./buildconf
-          ./configure --without-openssl --with-gnutls=<somewhere1> --with-nghttp3=<somewhere2> --with-ngtcp2=<somewhere3>
+          ./configure --without-openssl --with-gnutls=/home/gnutls --with-nghttp3=/home/nghttp3 --with-ngtcp2=/home/ngtcp2
           make
           
       - name: test
