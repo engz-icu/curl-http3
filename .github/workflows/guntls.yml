@@ -29,21 +29,6 @@ jobs:
          sudo apt update -y
          sudo apt upgrade -y
          sudo apt install lzip
-         wget https://ftp.gnu.org/gnu/nettle/nettle-3.7.3.tar.gz
-         tar zxvf nettle-3.6.0.tar.gz
-         cd nettle-3.6.0
-         ./configure
-         sudo make
-         sudo make install
-         cd
-         wget https://ftp.gnu.org/gnu/gmp/gmp-6.2.1.tar.lz
-         lzip -d gmp-6.2.1.tar.lz
-         tar xvf gmp-6.2.1.tar
-         cd gmp-6.2.1
-         ./configure
-         sudo make
-         sudo make install
-         cd
          sudo apt-get install -y gnulib
          sudo apt-get install -y gperf
          sudo apt-get install -y autopoint
