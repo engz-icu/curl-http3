@@ -28,15 +28,15 @@ jobs:
         run: |
          sudo apt update -y
          sudo apt upgrade -y
-         sudo apt install lzip
+         sudo apt-get install lzip
          sudo apt-get install -y gnulib
          sudo apt-get install -y gperf
          sudo apt-get install -y autopoint
          sudo apt-get install -y autogen
          git clone --depth 1 https://gitlab.com/gnutls/gnutls.git
          cd gnutls
-         ./bootstrap
-         ./configure --prefix=/home/gnutls
+         sudo ./bootstrap
+         sudo ./configure --prefix=/home/gnutls
          sudo make
          sudo make install
 
@@ -47,25 +47,25 @@ jobs:
           git clone https://github.com/ngtcp2/nghttp3
           cd nghttp3
           autoreconf -i
-          ./configure --prefix=/home/nghttp3 --enable-lib-only
-          make
-          make install
+          sudo ./configure --prefix=/home/nghttp3 --enable-lib-only
+          sudo make
+          sudo make install
           cd ..
           git clone https://github.com/ngtcp2/ngtcp2
           cd ngtcp2
           autoreconf -i
-          ./configure PKG_CONFIG_PATH=/home/ngtcp2/lib/pkgconfig:<somewhere2>/lib/pkgconfig LDFLAGS="-Wl,-rpath,<somewhere1>/lib" --prefix=<somewhere3> --enable-lib-only --with-gnutls
-          make
-          make install
+          sudo ./configure PKG_CONFIG_PATH=/home/ngtcp2/lib/pkgconfig:<somewhere2>/lib/pkgconfig LDFLAGS="-Wl,-rpath,<somewhere1>/lib" --prefix=<somewhere3> --enable-lib-only --with-gnutls
+          sudo make
+          sudo make install
           
       - name: curl
         run: |
           cd ..
           git clone https://github.com/curl/curl
           cd curl
-          ./buildconf
-          ./configure --without-openssl --with-gnutls=/home/gnutls --with-nghttp3=/home/nghttp3 --with-ngtcp2=/home/ngtcp2
-          make
+          sudo ./buildconf
+          sudo ./configure --without-openssl --with-gnutls=/home/gnutls --with-nghttp3=/home/nghttp3 --with-ngtcp2=/home/ngtcp2
+          sudo make
           
       - name: test
         run: |
