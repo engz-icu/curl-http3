@@ -42,6 +42,7 @@ jobs:
          sudo make install
          cd
          cd /home/runner/work/curl-http3/curl-http3/gnutls
+         sudo apt install Libnettle
          sudo ./bootstrap
          sudo ./configure --prefix=/home/gnutls
          sudo make
