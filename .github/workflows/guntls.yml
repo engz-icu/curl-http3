@@ -30,8 +30,8 @@ jobs:
          sudo apt upgrade -y
          sudo apt install lzip
          wget https://ftp.gnu.org/gnu/nettle/nettle-3.7.3.tar.gz
-         tar zxvf nettle-3.7.3.tar.gz
-         cd nettle-3.7.3
+         tar zxvf nettle-3.6.0.tar.gz
+         cd nettle-3.6.0
          ./configure
          sudo make
          sudo make install
