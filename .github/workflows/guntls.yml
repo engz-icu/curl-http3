@@ -41,7 +41,7 @@ jobs:
          sudo make
          sudo make install
          cd
-         cd gnutls
+         cd /home/runner/work/curl-http3/curl-http3/gnutls
          sudo ./bootstrap
          sudo ./configure --prefix=/home/gnutls
          sudo make
