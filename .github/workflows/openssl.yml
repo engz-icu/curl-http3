@@ -32,7 +32,7 @@ jobs:
           sudo apt upgrade
           git clone --depth 1 -b OpenSSL_1_1_1k+quic https://github.com/quictls/openssl
           cd openssl
-          ./config enable-tls1_3 --prefix=<somewhere1>
+          ./config enable-tls1_3 --prefix=/home/openssl
           make
           make install_sw
 
@@ -43,7 +43,7 @@ jobs:
           git clone https://github.com/ngtcp2/nghttp3
           cd nghttp3
           autoreconf -i
-          ./configure --prefix=<somewhere2> --enable-lib-only
+          ./configure --prefix=/home/nghttp3 --enable-lib-only
           make
           make install
 
@@ -53,7 +53,7 @@ jobs:
           git clone https://github.com/ngtcp2/ngtcp2
           cd ngtcp2
           autoreconf -i
-          ./configure PKG_CONFIG_PATH=<somewhere1>/lib/pkgconfig:<somewhere2>/lib/pkgconfig LDFLAGS="-Wl,-rpath,<somewhere1>/lib" --prefix=<somewhere3> --enable-lib-only
+          ./configure PKG_CONFIG_PATH=/home/openssl/lib/pkgconfig:/home/nghttp3/lib/pkgconfig LDFLAGS="-Wl,-rpath,/home/openssl/lib" --prefix=/home/ngtcp2 --enable-lib-only
           make
           make install
 
@@ -63,7 +63,7 @@ jobs:
           git clone https://github.com/curl/curl
           cd curl
           ./buildconf
-          LDFLAGS="-Wl,-rpath,<somewhere1>/lib" ./configure --with-openssl=<somewhere1> --with-nghttp3=<somewhere2> --with-ngtcp2=<somewhere3>
+          LDFLAGS="-Wl,-rpath,/home/openssl/lib" ./configure --with-openssl=/home/openssl --with-nghttp3=/home/nghttp3 --with-ngtcp2=/home/ngtcp2
           make
       - name: test
         run: |
