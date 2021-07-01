@@ -61,7 +61,7 @@ jobs:
           git clone https://github.com/curl/curl
           cd curl
           sudo ./buildconf
-          LDFLAGS="-Wl,-rpath,/home/openssl/lib" ./configure --with-openssl=/home/openssl --with-nghttp3=/home/nghttp3 --with-ngtcp2=/home/ngtcp2
+          sudo LDFLAGS="-Wl,-rpath,/home/openssl/lib" ./configure --with-openssl=/home/openssl --with-nghttp3=/home/nghttp3 --with-ngtcp2=/home/ngtcp2
           sudo make
       - name: test
         run: |
