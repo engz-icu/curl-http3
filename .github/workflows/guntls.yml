@@ -33,6 +33,8 @@ jobs:
          sudo apt-get install -y gperf
          sudo apt-get install -y autopoint
          sudo apt-get install -y autogen
+         sudo apt-get install -y pkg-config
+         export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
          git clone --depth 1 https://gitlab.com/gnutls/gnutls.git
          wget https://ftp.gnu.org/gnu/nettle/nettle-3.7.3.tar.gz
          tar zxvf nettle-3.7.3.tar.gz
@@ -41,9 +43,7 @@ jobs:
          sudo make
          sudo make install
          cd
-         sudo apt-get install gnutls
          cd /home/runner/work/curl-http3/curl-http3/gnutls
-         ./configure --prefix=/usr --docdir=/usr/share/doc/gnutls-3.7.2 --disable-guile --with-included-unistring
          sudo ./bootstrap
          sudo ./configure --prefix=/home/gnutls
          sudo make
