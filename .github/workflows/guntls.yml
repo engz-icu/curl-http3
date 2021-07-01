@@ -37,13 +37,13 @@ jobs:
          wget https://ftp.gnu.org/gnu/nettle/nettle-3.7.3.tar.gz
          tar zxvf nettle-3.7.3.tar.gz
          cd nettle-3.7.3
-         ./configure --prefix=/home/nettle
+         ./configure --prefix=/usr/
          sudo make
          sudo make install
          cd
          cd /home/runner/work/curl-http3/curl-http3/gnutls
          sudo ./bootstrap
-         sudo PKG_CONFIG_PATH="/home/nettle:/usr/lib/pkgconfig/" ./configure --prefix=/home/gnutls
+         sudo ./configure --prefix=/home/gnutls
          sudo make
          sudo make install
 
