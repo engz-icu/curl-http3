@@ -30,9 +30,9 @@ jobs:
           sudo apt upgrade
           git clone --depth 1 -b OpenSSL_1_1_1k+quic https://github.com/quictls/openssl
           cd openssl
-          ./config enable-tls1_3 --prefix=/home/openssl
-          make
-          make install_sw
+          sudo ./config enable-tls1_3 --prefix=/home/openssl
+          sudo make
+          sudo make install_sw
 
       # Runs a set of commands using the runners shell
       - name: Build nghttp3
@@ -41,9 +41,9 @@ jobs:
           git clone https://github.com/ngtcp2/nghttp3
           cd nghttp3
           autoreconf -i
-          ./configure --prefix=/home/nghttp3 --enable-lib-only
-          make
-          make install
+          sudo ./configure --prefix=/home/nghttp3 --enable-lib-only
+          sudo make
+          sudo make install
 
       - name: Build ngtcp2
         run: |
@@ -52,17 +52,17 @@ jobs:
           cd ngtcp2
           autoreconf -i
           ./configure PKG_CONFIG_PATH=/home/openssl/lib/pkgconfig:/home/nghttp3/lib/pkgconfig LDFLAGS="-Wl,-rpath,/home/openssl/lib" --prefix=/home/ngtcp2 --enable-lib-only
-          make
-          make install
+          sudo make
+          sudo make install
 
       - name: Build curl
         run: |
           cd ..
           git clone https://github.com/curl/curl
           cd curl
-          ./buildconf
+          sudo ./buildconf
           LDFLAGS="-Wl,-rpath,/home/openssl/lib" ./configure --with-openssl=/home/openssl --with-nghttp3=/home/nghttp3 --with-ngtcp2=/home/ngtcp2
-          make
+          sudo make
       - name: test
         run: |
            curl --http3 https://cloudflare.com
