@@ -37,13 +37,12 @@ jobs:
          wget https://ftp.gnu.org/gnu/nettle/nettle-3.7.3.tar.gz
          tar zxvf nettle-3.7.3.tar.gz
          cd nettle-3.7.3
-         ./configure --prefix=/usr --enable-static --enable-mini-gmp
+         ./configure
          sudo make
          sudo make install
-         sudo chmod -v 755 /usr/lib64/lib{hogweed,nettle}.so && install -v -m755 -d /usr/share/doc/nettle-3.7.3 && install -v -m644 nettle.html /usr/share/doc/nettle-3.7.3
          cd
+         sudo apt-get install gnutls
          cd /home/runner/work/curl-http3/curl-http3/gnutls
-         export NETTLE_CFLAGS="-I/usr/include/nettle" NETTLE_LIBS="-L/usr/lib64 -lnettle" HOGWEED_CFLAGS="-I/usr/include/nettle" HOGWEED_LIBS="-L/usr/lib64 -lhogweed" P11_KIT_CFLAGS="-I/usr/include/p11-kit-1/p11-kit" P11_KIT_LIBS="-L/usr/lib -lp11-kit" LIBTASN1_CFLAGS="-I/usr/include" LIBTASN1_LIBS="-L/usr/lib -ltasn1" LIBIDN2_CFLAGS="-I/usr/include" LIBIDN2_LIBS="-L/usr/lib -lidn2" GMP_CFLAGS="-I/usr/local/include" GMP_LIBS="-L/usr/local/lib -lgmp"
          ./configure --prefix=/usr --docdir=/usr/share/doc/gnutls-3.7.2 --disable-guile --with-included-unistring
          sudo ./bootstrap
          sudo ./configure --prefix=/home/gnutls
