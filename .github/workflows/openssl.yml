@@ -63,6 +63,7 @@ jobs:
           sudo ./buildconf
           sudo LDFLAGS="-Wl,-rpath,/home/openssl/lib" ./configure --with-openssl=/home/openssl --with-nghttp3=/home/nghttp3 --with-ngtcp2=/home/ngtcp2
           sudo make
+          sudo make install
       - name: test
         run: |
            curl --http3 https://cloudflare.com
