@@ -48,4 +48,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: curl
-          path: /home/runner/work/curl-http3/curl-http3/
+          path: /home/runner/work/curl-http3/curl-http3/curl
