@@ -39,14 +39,13 @@ jobs:
       - name: curl
         run: |
           cd ..
-          ls
           git clone https://github.com/curl/curl
           cd curl
           autoreconf -fi
           ./configure LDFLAGS="-Wl,-rpath,/home/runner/work/curl-http3/curl-http3/quiche/target/release" --with-openssl=/home/runner/work/curl-http3/curl-http3/quiche/deps/boringssl/src --with-quiche=/home/runner/work/curl-http3/curl-http3/quiche/target/release
           make
-          ls
-      - name: test
-        run: |
-          curl --http3 https://cloudflare.com
-          curl --alt-svc altsvc.cache https://quic.aiortc.org/
+          make install
+      - uses: actions/upload-artifact@v2
+        with:
+          name: curl
+          path: /home/runner/work/curl-http3/curl-http3/curl/
