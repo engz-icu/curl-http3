@@ -44,7 +44,7 @@ jobs:
           autoreconf -fi
           ./configure LDFLAGS="-Wl,-rpath,/home/runner/work/curl-http3/curl-http3/quiche/target/release" --with-openssl=/home/runner/work/curl-http3/curl-http3/quiche/deps/boringssl/src --with-quiche=/home/runner/work/curl-http3/curl-http3/quiche/target/release
           make
-          make install
+          sudo make install
       - uses: actions/upload-artifact@v2
         with:
           name: curl
