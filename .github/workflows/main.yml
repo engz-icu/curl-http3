@@ -45,7 +45,8 @@ jobs:
           ./configure LDFLAGS="-Wl,-rpath,/home/runner/work/curl-http3/curl-http3/quiche/target/release" --with-openssl=/home/runner/work/curl-http3/curl-http3/quiche/deps/boringssl/src --with-quiche=/home/runner/work/curl-http3/curl-http3/quiche/target/release
           make
           sudo make install
+          curl --http3 https://nghttp2.org:4433/
       - uses: actions/upload-artifact@v2
         with:
           name: curl
-          path: /home/runner/work/curl-http3/curl-http3/curl/
+          path: /home/runner/work/curl-http3/curl-http3/
