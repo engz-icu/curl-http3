@@ -43,7 +43,7 @@ jobs:
           git clone https://github.com/curl/curl
           cd curl
           autoreconf -fi
-          ./configure LDFLAGS="-Wl,-rpath,$PWD/../quiche/target/release" --with-openssl=/home/runner/work/curl-http3/curl-http3/quiche/deps/boringssl/src --with-quiche=$PWD/../quiche/target/release
+          ./configure LDFLAGS="-Wl,-rpath,/home/runner/work/curl-http3/curl-http3/quiche/target/release" --with-openssl=/home/runner/work/curl-http3/curl-http3/quiche/deps/boringssl/src --with-quiche=/home/runner/work/curl-http3/curl-http3/quiche/target/release
           make
           ls
       - name: test
